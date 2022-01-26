@@ -2,8 +2,12 @@ import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
+import dotenv from "dotenv";
 
 import postsRoute from "./routes/posts.js";
+import userRoute from "./routes/user.js";
+
+dotenv.config();
 
 const app = express();
 
@@ -14,9 +18,12 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
 app.use("/posts", postsRoute);
+app.use("/user", userRoute);
+app.use("/", (req, res) => {
+  res.send("HEATH CHECK SUCCESSFULLY");
+});
 
-const CONNECTION_URL =
-  "mongodb+srv://dev:AC8Y701arynaSBFG@cluster0.mgtqt.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const CONNECTION_URL = process.env.CONNECTION_URL;
 const PORT = process.env.PORT || 3001;
 
 mongoose
