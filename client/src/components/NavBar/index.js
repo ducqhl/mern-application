@@ -1,13 +1,14 @@
 import { AppBar, Avatar, Button, Toolbar, Typography } from "@material-ui/core";
 import decode from "jwt-decode";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { LOGOUT } from "../../constants/actionTypes";
 import { PAGES } from "../../constants/routes";
 import { STORAGE_KEYS } from "../../constants/storageKeys";
-import memories from "../../images/memories.png";
+import memoriesLogo from "../../images/memoriesLogo.png";
+import memoriesText from "../../images/memoriesText.png";
 import useStyles from "./styles";
 
 const NavBar = () => {
@@ -17,15 +18,14 @@ const NavBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const logout = () => {
+  const logout = useCallback(() => {
     dispatch({ type: LOGOUT });
     navigate(PAGES.AUTH);
     setUser(null);
-  };
+  }, [dispatch, navigate, setUser]);
 
   useEffect(() => {
     const token = user?.token;
-
     if (token) {
       const decodedToken = decode(token);
       // console.log(JSON.stringify(decodedToken));
@@ -36,21 +36,24 @@ const NavBar = () => {
     }
 
     setUser(JSON.parse(localStorage.getItem(STORAGE_KEYS.PROFILE)));
-  }, [location]);
+  }, [location, logout, user?.token]);
 
   return (
     <AppBar className={classes.appBar} position="static" color="inherit">
-      <div className={classes.brandContainer}>
-        <Typography className={classes.heading} variant="h2" align="center">
-          Memories
-        </Typography>
+      <Link to={PAGES.HOME} className={classes.brandContainer}>
         <img
           className={classes.image}
-          src={memories}
-          alt="memories"
+          src={memoriesLogo}
+          alt="memories logo"
           height="60"
         />
-      </div>
+        <img
+          className={classes.memoryText}
+          src={memoriesText}
+          alt="memories text"
+          height="45"
+        />
+      </Link>
       <Toolbar className={classes.toolbar}>
         {user && (
           <div className={classes.profile}>

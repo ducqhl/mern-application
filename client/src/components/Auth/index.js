@@ -20,7 +20,7 @@ import Icon from "./icon";
 import useStyles from "./styles";
 
 const initialState = {
-  firstName: "", 
+  firstName: "",
   lastName: "",
   email: "",
   password: "",

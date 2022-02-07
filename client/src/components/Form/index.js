@@ -3,15 +3,17 @@ import ClearIcon from "@material-ui/icons/Clear";
 import { useEffect, useState } from "react";
 import FileBase from "react-file-base64";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-import { createPost, updatePost } from "../../actions/posts";
+import { createPost, updatePost } from "../../actions/memory.js";
 import { STORAGE_KEYS } from "../../constants/storageKeys";
 import useStyles from "./styles";
 
 const Form = ({ currentId, setCurrentId }) => {
+  const navigate = useNavigate();
   const classes = useStyles();
   const post = useSelector((state) =>
-    currentId ? state.posts.find((p) => p._id === currentId) : null
+    currentId ? state.memory.posts.find((p) => p._id === currentId) : null
   );
   const [postData, setPostData] = useState({
     title: "",
@@ -35,7 +37,7 @@ const Form = ({ currentId, setCurrentId }) => {
     };
 
     if (currentId) dispatch(updatePost(currentId, processPost));
-    else dispatch(createPost(processPost));
+    else dispatch(createPost(processPost, navigate));
 
     clear();
   };
@@ -52,7 +54,7 @@ const Form = ({ currentId, setCurrentId }) => {
 
   if (!user?.result?.name) {
     return (
-      <Paper className={classes.paper}>
+      <Paper className={classes.paper} elevation={6}>
         <Typography variant="h6" align="center">
           Please sign in to create your own memories and like other's memories
         </Typography>
@@ -61,11 +63,11 @@ const Form = ({ currentId, setCurrentId }) => {
   }
 
   return (
-    <Paper className={[classes.root, classes.form].join(" ")}>
+    <Paper className={classes.paper} elevation={6}>
       <form
         autoComplete="off"
         noValidate
-        className={classes.form}
+        className={[classes.form, classes.root].join(" ")}
         onSubmit={onSubmit}
       >
         <Typography variant="h6">

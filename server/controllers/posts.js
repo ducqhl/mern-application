@@ -2,14 +2,69 @@ import mongoose from "mongoose";
 import PostMessage from "../models/postMessage.js";
 // https://www.restapitutorial.com/httpstatuscodes.html
 
-export const getPosts = async (req, res) => {
-  try {
-    const postMessages = await PostMessage.find();
-    console.log(postMessages);
+export const getPost = async (req, res) => {
+  const { id } = req.params;
 
-    res.status(200).json(postMessages);
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send({ message: "Post id is invalid" });
+
+  try {
+    const post = await PostMessage.findById(id);
+    res.status(200).json(post);
   } catch (error) {
-    console.error(postMessages);
+    console.log(error);
+    res.status(404).json({ message: error.message });
+  }
+};
+
+export const getPosts = async (req, res) => {
+  const { page = 1 } = req.query;
+
+  try {
+    const LIMIT = 8;
+    const startIndex = (Number(page) - 1) * LIMIT;
+    const total = await PostMessage.countDocuments({});
+
+    const posts = await PostMessage.find()
+      .sort({ _id: -1 })
+      .limit(LIMIT)
+      .skip(startIndex);
+
+    res
+      .status(200)
+      .json({ posts, page, numberOfPages: Math.ceil(total / LIMIT) });
+  } catch (error) {
+    console.error(error);
+    res.status(404).json({ message: error.message });
+  }
+};
+
+export const getPostsBySearch = async (req, res) => {
+  const { search, tags } = req.query;
+
+  try {
+    const titleRegex = new RegExp(search || null, "i");
+
+    const posts = await PostMessage.find({
+      $or: [{ title: titleRegex }, { tags: { $in: tags.split(",") } }],
+    });
+
+    res.status(200).json(posts);
+  } catch (error) {
+    console.error(error);
+
+    res.status(404).json({ message: error.message });
+  }
+};
+
+export const getTags = async (req, res) => {
+  try {
+    const posts = await PostMessage.find();
+    const tags = [...new Set(posts.map((p) => p.tags).flat())];
+
+    res.status(200).json(tags);
+  } catch (error) {
+    console.error(error);
 
     res.status(404).json({ message: error.message });
   }
@@ -20,7 +75,6 @@ export const createPosts = async (req, res) => {
 
   const newPost = new PostMessage({ ...post, creator: req.userId });
 
-  console.log(newPost);
   try {
     await newPost.save();
 

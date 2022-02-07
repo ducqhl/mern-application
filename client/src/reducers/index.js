@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
 
 import auth from "./auth";
-import posts from "./posts";
+import memory from "./memory";
 
 export default combineReducers({
-  posts,
+  memory,
   auth,
 });

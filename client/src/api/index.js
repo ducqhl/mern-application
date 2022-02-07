@@ -1,5 +1,6 @@
 import axios from "axios";
 
+import { QUERY_KEYS } from "../constants/queryKeys";
 import { STORAGE_KEYS } from "../constants/storageKeys";
 
 // const baseURL = "http://localhost:3001";
@@ -17,7 +18,14 @@ API.interceptors.request.use((req) => {
   return req;
 });
 
-export const fetchPosts = () => API.get(postUrl);
+export const fetchPost = (id) => API.get(`${postUrl}/${id}`);
+export const fetchPosts = (page) =>
+  API.get(`${postUrl}?${QUERY_KEYS.PAGE}=${page}`);
+export const fetchTags = () => API.get(`${postUrl}/tags`);
+export const fetchPostsBySearch = (search, tags) =>
+  API.get(
+    `${postUrl}/search?${QUERY_KEYS.SEARCH}=${search}&${QUERY_KEYS.TAGS}=${tags}  `
+  );
 export const createPost = (post) => API.post(postUrl, post);
 export const updatePost = (id, updatePost) =>
   API.patch(`${postUrl}/${id}`, updatePost);
