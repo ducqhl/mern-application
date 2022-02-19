@@ -1,7 +1,7 @@
 # MERN APPLICATION
 
 ## Website
-- Font-End: https://inspiring-pagent.netlify.app
+- Font-End: https://memory-appi.netlify.app/posts
 - Back-End: https://memory-appi.herokuapp.com
 
 ## Technologies:
