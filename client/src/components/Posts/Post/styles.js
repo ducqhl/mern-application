@@ -32,6 +32,10 @@ export default makeStyles({
     top: "20px",
     right: "20px",
     color: "white",
+    zIndex: "1",
+    transition: "transform 0.2s ease-in-out",
+
+    "&:hover": { transform: "scale3d(1.7, 1.7, 1)" },
   },
   grid: {
     display: "flex",

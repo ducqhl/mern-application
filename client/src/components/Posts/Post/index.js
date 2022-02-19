@@ -65,6 +65,17 @@ const Post = ({ post, setCurrentId }) => {
 
   return (
     <Card className={classes.card} raised elevation={6}>
+      {isCreator && (
+        <div className={classes.overlay2} name="edit">
+          <Button
+            style={{ color: "white", borderRadius: "50%", minWidth: "100%" }}
+            size="small"
+            onClick={() => setCurrentId(post._id)}
+          >
+            <MoreHorizonIcon fontSize="medium" />
+          </Button>
+        </div>
+      )}
       <ButtonBase
         component="span"
         name="test"
@@ -82,17 +93,7 @@ const Post = ({ post, setCurrentId }) => {
             {moment(post.createdAt).fromNow()}
           </Typography>
         </div>
-        {isCreator && (
-          <div className={classes.overlay2}>
-            <Button
-              style={{ color: "white" }}
-              size="small"
-              onClick={() => setCurrentId(post._id)}
-            >
-              <MoreHorizonIcon fontSize="medium" />
-            </Button>
-          </div>
-        )}
+
         <div className={classes.details}>
           <Typography variant="body2" color="textSecondary">
             {post.tags.map((tag) => `#${tag} `)}

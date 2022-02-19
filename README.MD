@@ -6,6 +6,7 @@
 
 ## Testing Account
 - ducle@gmail.com | 123123
+
 ## Technologies:
 - React (powered with hooks)
 - Redux, Redux-Thunk
