@@ -36,7 +36,7 @@ const Home = () => {
   const tagsQuery = query.get(QUERY_KEYS.TAGS);
 
   const [currentId, setCurrentId] = useState(null);
-  const tags = useSelector((state) => state.memory.tags);
+  const tags = useSelector((state) => state.memory.tags ?? []);
   const [search, setSearch] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
 
@@ -64,6 +64,10 @@ const Home = () => {
   };
 
   const isLoadingTags = tags && tags?.length < 1;
+
+  const handleChangeTags = (event, values) => {
+    return setSelectedTags(values);
+  };
 
   return (
     <Grow in>
@@ -113,7 +117,7 @@ const Home = () => {
                   id="tags-standard"
                   options={tags}
                   getOptionLabel={(option) => option}
-                  onChange={(event, values) => setSelectedTags(values)}
+                  onChange={handleChangeTags}
                   renderInput={(params) => (
                     <TextField
                       {...params}
