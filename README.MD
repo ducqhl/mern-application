@@ -1,7 +1,7 @@
 # MERN APPLICATION
 
 ## Website
-- Font-End: https://memory-appi.netlify.app/posts
+- Font-End: https://memory-appi.netlify.app
 - Back-End: https://memory-appi.herokuapp.com
 
 ## Testing Account
