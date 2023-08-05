@@ -4,7 +4,7 @@ import { QUERY_KEYS } from "../constants/queryKeys";
 import { STORAGE_KEYS } from "../constants/storageKeys";
 
 // const baseURL = "http://localhost:3001";
-const baseURL = "https://memory-appi.herokuapp.com";
+const baseURL = "https://memory-appi-server.netlify.app";
 const postUrl = `/posts`;
 const userUrl = `/user`;
 const API = axios.create({ baseURL });
