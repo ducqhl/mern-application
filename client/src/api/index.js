@@ -3,8 +3,8 @@ import axios from "axios";
 import { QUERY_KEYS } from "../constants/queryKeys";
 import { STORAGE_KEYS } from "../constants/storageKeys";
 
-// const baseURL = "http://localhost:3001";
-const baseURL = "https://mearn-server.onrender.com";
+// const baseURL =;
+const baseURL = process.env.REACT_APP_API_BASE_URL || "http://localhost:3001";
 const postUrl = `/posts`;
 const userUrl = `/user`;
 const API = axios.create({ baseURL });
