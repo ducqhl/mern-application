@@ -2,7 +2,7 @@
 
 ## Website
 - Font-End: https://memory-appi.netlify.app
-- Back-End: https://memory-appi.herokuapp.com
+- Back-End: https://mearn-server.onrender.com
 
 ## Testing Account
 - ducle@gmail.com | 123123
